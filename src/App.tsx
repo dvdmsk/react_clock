@@ -25,22 +25,39 @@ export class App extends React.Component<Props, State> {
 
   timerId = 0;
 
+  handleRightClick = () => {
+    this.setState(currentState => ({
+      ...currentState,
+      isClock: false,
+    }));
+  };
+
+  handleLeftClick = () => {
+    this.setState(currentState => ({
+      ...currentState,
+      isClock: true,
+    }));
+  };
+
   componentDidMount(): void {
     this.timerId = window.setInterval(() => {
       this.setState({ clockName: getRandomName() });
+      // eslint-disable-next-line no-console
+      console.warn(
+        `Renamed from ${this.state.clockName} to ${this.state.clockName}`,
+      );
     }, 3300);
 
-    document.addEventListener('contextmenu', () => {
-      this.setState({ isClock: false });
-    });
+    document.addEventListener('contextmenu', this.handleRightClick);
 
-    document.addEventListener('click', () => {
-      this.setState({ isClock: true });
-    });
+    document.addEventListener('click', this.handleLeftClick);
   }
 
   componentWillUnmount(): void {
     window.clearInterval(this.timerId);
+
+    document.removeEventListener('click', this.handleLeftClick);
+    document.removeEventListener('contextmenu', this.handleRightClick);
   }
 
   render() {
