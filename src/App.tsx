@@ -42,10 +42,6 @@ export class App extends React.Component<Props, State> {
   componentDidMount(): void {
     this.timerId = window.setInterval(() => {
       this.setState({ clockName: getRandomName() });
-      // eslint-disable-next-line no-console
-      console.warn(
-        `Renamed from ${this.state.clockName} to ${this.state.clockName}`,
-      );
     }, 3300);
 
     document.addEventListener('contextmenu', this.handleRightClick);

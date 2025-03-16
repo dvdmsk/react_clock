@@ -25,9 +25,19 @@ export class Clock extends React.Component<Props, State> {
     prevProps: Readonly<Props>,
     prevState: Readonly<State>,
   ): void {
+    const { oldName, newName } = {
+      oldName: prevProps.clockName,
+      newName: this.props.clockName,
+    };
+
     if (prevState.today !== this.state.today) {
       // eslint-disable-next-line no-console
       console.log(this.state.today.toUTCString().slice(-12, -4));
+    }
+
+    if (oldName !== newName) {
+      // eslint-disable-next-line no-console
+      console.warn(`Renamed from ${oldName} to ${newName}`);
     }
   }
 
